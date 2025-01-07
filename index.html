@@ -21,55 +21,50 @@
   <header class="navbar">
     <div class="container nav-container">
       <div class="logo">
-        <!-- Logo can be an image or text. Replace the src with your actual logo file. -->
         <img src="logo.jpeg" alt="Kartspd Logo" />
       </div>
       <nav>
         <ul class="nav-links">
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#testimonials">Testimonials</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#hero" data-translate="navHome">Home</a></li>
+          <li><a href="#features" data-translate="navFeatures">Features</a></li>
+          <li><a href="#pricing" data-translate="navPricing">Pricing</a></li>
+          <li><a href="#testimonials" data-translate="navTestimonials">Testimonials</a></li>
+          <li><a href="#faq" data-translate="navFaq">FAQ</a></li>
         </ul>
-      </nav><a href="#purchase" class="btn btn-accent nav-cta">Buy Now</a>
+      </nav>
+      <a href="#purchase" class="btn btn-accent nav-cta" data-translate="heroButton">Buy Now</a>
     </div>
   </header>
 
   <!-- ======== HERO SECTION ======== -->
   <section id="hero" class="hero">
     <div class="container hero-content">
-      <h1>Push Your Karting Performance to the Limit</h1>
-      <p>Track real-time data, harness AI insights, and shave seconds off your lap times.</p>
-      <a href="#purchase" class="btn btn-accent">Get Your Device Today</a>
-      <!-- Optional hero image or background overlay -->
+      <h1 data-translate="heroTitle">Push Your Karting Performance to the Limit</h1>
+      <p data-translate="heroSubtitle">Track real-time data, harness AI insights, and shave seconds off your lap times.</p>
+      <a href="#purchase" class="btn btn-accent" data-translate="heroButton">Get Your Device Today</a>
     </div>
   </section>
-
-  <!-- ======== FEATURES SECTION ======== -->
+  
+ <!-- ======== FEATURES SECTION ======== -->
   <section id="features" class="features">
     <div class="container">
-      <h2 class="section-title">Why Choose Our Telemetry Device?</h2>
+      <h2 class="section-title" data-translate="featuresTitle">Why Choose Our Telemetry Device?</h2>
       <div class="feature-grid">
         <div class="feature-card">
-          <div class="icon icon-latency"></div>
-          <h3>Ultra-Low Latency</h3>
-          <p>Instant feedback to adapt your driving on the fly.</p>
+          <h3 data-translate="feature1Title">Ultra-Low Latency</h3>
+          <p data-translate="feature1Desc">Instant feedback to adapt your driving on the fly.</p>
         </div>
         <div class="feature-card">
-          <div class="icon icon-sensors"></div>
-          <h3>Next-Gen Sensors</h3>
-          <p>Accurately measure G-forces, steering angles, and more.</p>
+          <h3 data-translate="feature2Title">Next-Gen Sensors</h3>
+          <p data-translate="feature2Desc">Accurately measure G-forces, steering angles, and more.</p>
         </div>
         <div class="feature-card">
-          <div class="icon icon-ai"></div>
-          <h3>AI-Powered Analytics</h3>
-          <p>Personalized insights for continuous performance gains.</p>
+          <h3 data-translate="feature3Title">AI-Powered Analytics</h3>
+          <p data-translate="feature3Desc">Personalized insights for continuous performance gains.</p>
         </div>
         <div class="feature-card">
-          <div class="icon icon-install"></div>
-          <h3>Easy Installation</h3>
-          <p>Quick setup—no technical skills required.</p>
+          <h3 data-translate="feature4Title">Easy Installation</h3>
+          <p data-translate="feature4Desc">Quick setup—no technical skills required.</p>
         </div>
       </div>
     </div>
@@ -275,5 +270,78 @@
     });
   });
 </script>
+
+<!-- ======== SCRIPT ======== -->
+  <script>
+    const translations = {
+      en: {
+        navHome: "Home",
+        navFeatures: "Features",
+        navPricing: "Pricing",
+        navTestimonials: "Testimonials",
+        navFaq: "FAQ",
+        heroTitle: "Push Your Karting Performance to the Limit",
+        heroSubtitle: "Track real-time data, harness AI insights, and shave seconds off your lap times.",
+        heroButton: "Get Your Device Today",
+        featuresTitle: "Why Choose Our Telemetry Device?",
+        feature1Title: "Ultra-Low Latency",
+        feature1Desc: "Instant feedback to adapt your driving on the fly.",
+        feature2Title: "Next-Gen Sensors",
+        feature2Desc: "Accurately measure G-forces, steering angles, and more.",
+        feature3Title: "AI-Powered Analytics",
+        feature3Desc: "Personalized insights for continuous performance gains.",
+        feature4Title: "Easy Installation",
+        feature4Desc: "Quick setup—no technical skills required."
+      },
+      pt: {
+        navHome: "Início",
+        navFeatures: "Recursos",
+        navPricing: "Preços",
+        navTestimonials: "Depoimentos",
+        navFaq: "Perguntas Frequentes",
+        heroTitle: "Impulsione Seu Desempenho de Kart ao Limite",
+        heroSubtitle: "Acompanhe dados em tempo real, aproveite insights de IA e economize segundos nas suas voltas.",
+        heroButton: "Compre Agora",
+        featuresTitle: "Por que escolher nosso dispositivo de telemetria?",
+        feature1Title: "Latência Ultra Baixa",
+        feature1Desc: "Feedback instantâneo para adaptar sua condução rapidamente.",
+        feature2Title: "Sensores de Próxima Geração",
+        feature2Desc: "Meça com precisão forças G, ângulos de direção e muito mais.",
+        feature3Title: "Análise com IA",
+        feature3Desc: "Insights personalizados para ganhos contínuos de desempenho.",
+        feature4Title: "Fácil Instalação",
+        feature4Desc: "Configuração rápida—sem necessidade de habilidades técnicas."
+      }
+    };
+
+    function setLanguage(lang) {
+      document.querySelectorAll("[data-translate]").forEach(element => {
+        const key = element.dataset.translate;
+        if (translations[lang] && translations[lang][key]) {
+          element.textContent = translations[lang][key];
+        }
+      });
+    }
+
+    // Default language
+    setLanguage("pt");
+
+    // Language switcher
+    const langSwitchButton = document.createElement("button");
+    langSwitchButton.id = "lang-switch";
+    langSwitchButton.classList.add("btn", "btn-accent");
+    langSwitchButton.style.position = "fixed";
+    langSwitchButton.style.top = "10px";
+    langSwitchButton.style.right = "10px";
+    langSwitchButton.textContent = "Switch Language";
+    document.body.appendChild(langSwitchButton);
+
+    document.getElementById("lang-switch").addEventListener("click", () => {
+      const currentLang = document.body.getAttribute("data-lang") || "en";
+      const newLang = currentLang === "en" ? "pt" : "en";
+      document.body.setAttribute("data-lang", newLang);
+      setLanguage(newLang);
+    });
+  </script>
 
 </html>
