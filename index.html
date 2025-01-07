@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Karting Telemetry Landing Page</title>
+  <!-- Link to External CSS -->
+  <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Google Fonts (optional) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Open+Sans:wght@400;500&display=swap" 
+    rel="stylesheet"
+  />
+</head>
+<body>
+
+  <!-- ======== HEADER / NAVBAR ======== -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="logo">
+        <!-- Logo can be an image or text. Replace the src with your actual logo file. -->
+        <img src="logo.jpeg" alt="Kartspd Logo" />
+      </div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav><a href="#purchase" class="btn btn-accent nav-cta">Buy Now</a>
+    </div>
+  </header>
+
+  <!-- ======== HERO SECTION ======== -->
+  <section id="hero" class="hero">
+    <div class="container hero-content">
+      <h1>Push Your Karting Performance to the Limit</h1>
+      <p>Track real-time data, harness AI insights, and shave seconds off your lap times.</p>
+      <a href="#purchase" class="btn btn-accent">Get Your Device Today</a>
+      <!-- Optional hero image or background overlay -->
+    </div>
+  </section>
+
+  <!-- ======== FEATURES SECTION ======== -->
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Our Telemetry Device?</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon icon-latency"></div>
+          <h3>Ultra-Low Latency</h3>
+          <p>Instant feedback to adapt your driving on the fly.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon icon-sensors"></div>
+          <h3>Next-Gen Sensors</h3>
+          <p>Accurately measure G-forces, steering angles, and more.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon icon-ai"></div>
+          <h3>AI-Powered Analytics</h3>
+          <p>Personalized insights for continuous performance gains.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon icon-install"></div>
+          <h3>Easy Installation</h3>
+          <p>Quick setup—no technical skills required.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== HOW IT WORKS SECTION ======== -->
+  <section class="how-it-works">
+    <div class="container hiw-container">
+      <div class="hiw-text">
+        <h2 class="section-title">How It Works</h2>
+        <ol>
+          <li><strong>Install the device</strong> in your kart with the included mount.</li>
+          <li><strong>Sync with our Web App</strong> to start collecting real-time data.</li>
+          <li><strong>AI Engine</strong> analyzes your performance and compares against optimal lines.</li>
+          <li><strong>Receive Insights</strong> after every lap to refine your driving.</li>
+        </ol>
+      </div>
+      <div class="hiw-image">
+        <!-- Replace with an actual graphic or illustration -->
+        <img src="device-illustration.png" alt="Device Illustration" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== DASHBOARD PREVIEW SECTION ======== -->
+  <section class="dashboard-preview">
+    <div class="container">
+      <h2 class="section-title">Get a Glimpse of the Future of Karting</h2>
+      <div class="preview-grid">
+        <div class="preview-card">
+          <img src="dashboard-1.png" alt="Dashboard Screenshot 1"/>
+          <p>Real-Time Lap Analytics</p>
+        </div>
+        <div class="preview-card">
+          <img src="dashboard-2.png" alt="Dashboard Screenshot 2"/>
+          <p>G-Force Monitoring</p>
+        </div>
+        <div class="preview-card">
+          <img src="dashboard-3.png" alt="Dashboard Screenshot 3"/>
+          <p>AI-Driven Recommendations</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== TESTIMONIALS SECTION ======== -->
+  <section id="testimonials" class="testimonials">
+    <div class="container">
+      <h2 class="section-title">What Our Drivers Say</h2>
+      <div class="testimonial-cards">
+        <div class="testimonial-card">
+          <p class="quote">“Thanks to this telemetry device, I’ve shaved seconds off my lap times. The AI tips are a game-changer!”</p>
+          <p class="author">— Carlos G., Amateur Racer</p>
+        </div>
+        <div class="testimonial-card">
+          <p class="quote">“Comparing laps has never been easier. The real-time data keeps me on top of my performance every turn.”</p>
+          <p class="author">— Marta L., Regional Champion</p>
+        </div>
+        <div class="testimonial-card">
+          <p class="quote">“The installation was super simple, and the insights are incredibly detailed. Highly recommend for serious racers!”</p>
+          <p class="author">— John P., Karting Enthusiast</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== PRICING SECTION ======== -->
+  <section id="pricing" class="pricing">
+    <div class="container">
+      <h2 class="section-title">Choose the Plan That Fuels Your Winning Streak</h2>
+      <div class="pricing-cards">
+        <!-- Basic Plan -->
+        <div class="pricing-card">
+          <h3>Basic Plan</h3>
+          <p class="price">FREE</p>
+          <ul class="features-list">
+            <li>Limited data tracking</li>
+            <li>Community support</li>
+            <li>Ideal for beginners</li>
+          </ul>
+          <a href="#purchase" class="btn btn-accent">Get Started</a>
+        </div>
+        <!-- Pro Plan -->
+        <div class="pricing-card featured">
+          <h3>Pro Plan</h3>
+          <p class="price">$XX / month</p>
+          <ul class="features-list">
+            <li>Real-time telemetry</li>
+            <li>AI-powered recommendations</li>
+            <li>Performance alerts</li>
+          </ul>
+          <a href="#purchase" class="btn btn-accent">Buy Now</a>
+        </div>
+        <!-- Elite Plan -->
+        <div class="pricing-card">
+          <h3>Elite Plan</h3>
+          <p class="price">$$XX / month</p>
+          <ul class="features-list">
+            <li>All Pro features</li>
+            <li>Advanced analytics & coaching</li>
+            <li>Priority support</li>
+          </ul>
+          <a href="#purchase" class="btn btn-accent">Buy Now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FAQ SECTION ======== -->
+  <section id="faq" class="faq">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <button class="faq-question">Is the device difficult to install?</button>
+        <div class="faq-answer">
+          <p>No, installation is straightforward and requires minimal tools.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Do I need prior racing experience to interpret the data?</button>
+        <div class="faq-answer">
+          <p>Not at all. Our AI translates complex data into clear, actionable insights for all skill levels.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Is it compatible with all kart models?</button>
+        <div class="faq-answer">
+          <p>Yes, it works with most chassis and engines. Feel free to contact us for more specifics.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Is a monthly subscription mandatory?</button>
+        <div class="faq-answer">
+          <p>We offer both free and paid plans so you can choose what’s right for your needs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FINAL CALL TO ACTION ======== -->
+  <section id="purchase" class="final-cta">
+    <div class="container cta-content">
+      <h2>Ready to Dominate the Track?</h2>
+      <p>Join a community of high-performance drivers who trust us to fine-tune every lap. Get started now and feel the difference in your next race.</p>
+      <a href="#" class="btn btn-accent btn-large">Buy Now</a>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-col">
+        <!-- Optionally, use a darker logo if needed -->
+        <!-- img src="logo.jpeg" alt="Product Logo" / -->
+		<h4>KartSPD</h4>
+        <p class="footer-description">
+          High-precision telemetry and AI-driven insights to transform your karting performance.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Installation Guide</a></li>
+          <li><a href="#">Product Updates</a></li>
+          <li><a href="#">Community Forum</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Follow Us</h4>
+        <div class="social-icons">
+          <a href="#"><img src="icon-facebook.svg" alt="Facebook"/></a>
+          <a href="#"><img src="icon-instagram.svg" alt="Instagram"/></a>
+          <a href="#"><img src="icon-youtube.svg" alt="YouTube"/></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Telemetry Kart. All rights reserved.</p>
+    </div>
+  </footer>
+
+</body>
+
+
+<script>
+  const faqItems = document.querySelectorAll(".faq-item");
+
+  faqItems.forEach(item => {
+    const questionBtn = item.querySelector(".faq-question");
+    questionBtn.addEventListener("click", () => {
+      item.classList.toggle("active");
+    });
+  });
+</script>
+
+</html>
