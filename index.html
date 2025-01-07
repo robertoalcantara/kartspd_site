@@ -21,7 +21,7 @@
   <header class="navbar">
     <div class="container nav-container">
       <div class="logo">
-        <img src="logo.jpeg" alt="Kartspd Logo" />
+        <img src="img/logo.jpeg" alt="Kartspd Logo" />
       </div>
       <nav>
         <ul class="nav-links">
@@ -32,16 +32,26 @@
           <li><a href="#faq" data-translate="navFaq">FAQ</a></li>
         </ul>
       </nav>
+      <div class="language-selector" style="display: flex; align-items: center;">
+        <img src="img/flag-br.svg" alt="Portuguese" style="width: 30px; height: 20px; cursor: pointer;" onclick="setLanguage('pt')">
+		
+		<img src="img/flag-en.svg" alt="English" style="width: 30px; height: 20px; margin-right: 5px; cursor: pointer;" onclick="setLanguage('en')">
+      </div>
       <a href="#purchase" class="btn btn-accent nav-cta" data-translate="heroButton">Buy Now</a>
     </div>
   </header>
 
+
   <!-- ======== HERO SECTION ======== -->
   <section id="hero" class="hero">
+	<video autoplay muted loop class="hero-video">
+	  <source src="videos/hero-background.mp4" type="video/mp4">
+	  Your browser does not support the video tag.
+	</video>
     <div class="container hero-content">
       <h1 data-translate="heroTitle">Push Your Karting Performance to the Limit</h1>
       <p data-translate="heroSubtitle">Track real-time data, harness AI insights, and shave seconds off your lap times.</p>
-      <a href="#purchase" class="btn btn-accent" data-translate="heroButton">Get Your Device Today</a>
+      <!-- a href="#purchase" class="btn btn-accent" data-translate="heroButton">Get Your Device Today</a -->
     </div>
   </section>
   
@@ -299,9 +309,9 @@
         navPricing: "Preços",
         navTestimonials: "Depoimentos",
         navFaq: "Perguntas Frequentes",
-        heroTitle: "Impulsione Seu Desempenho de Kart ao Limite",
-        heroSubtitle: "Acompanhe dados em tempo real, aproveite insights de IA e economize segundos nas suas voltas.",
-        heroButton: "Compre Agora",
+        heroTitle: "Seu potencial no kart, elevado ao máximo.",
+        heroSubtitle: "Acompanhe dados de telemetria, aproveite insights de IA e otimize o seu tempo de volta como nunca antes.",
+        heroButton: "Adquira já",
         featuresTitle: "Por que escolher nosso dispositivo de telemetria?",
         feature1Title: "Latência Ultra Baixa",
         feature1Desc: "Feedback instantâneo para adaptar sua condução rapidamente.",
@@ -342,6 +352,18 @@
       document.body.setAttribute("data-lang", newLang);
       setLanguage(newLang);
     });
+	
+	
+    function detectBrowserLanguage() {
+      const browserLang = navigator.language || navigator.userLanguage;
+      return browserLang.startsWith("pt") ? "pt" : "en";
+    }
+
+    // Set language based on browser preference
+    const defaultLanguage = detectBrowserLanguage();
+    setLanguage(defaultLanguage);
+    document.body.setAttribute("data-lang", defaultLanguage);
+	
   </script>
 
 </html>
