@@ -117,7 +117,7 @@ body {
 
 .hero-video {
   position: absolute;
-  filter:blur(0px) brightness(0.8);
+  filter:blur(0px) brightness(1.0);
   top: 0;
   left: 0;
   width: 100%;
@@ -128,18 +128,32 @@ body {
 
 .hero-content {
   position: relative; /* Ensures content is above the video */
-  max-width: 700px;
+  max-width: 800px;
   margin: 0 auto;
   margin-left: 100px;
   z-index: 1;
 }
 
 .hero h1 {
-  font-family: var(--heading-font);
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: #FFD700;
-  text-shadow: 4px 4px 10px rgba(0, 0, 0, 1); /* Adds a shadow for better visibility */
+  font-family: 'Orbitron', sans-serif; /* Fonte geométrica e futurista */
+  font-size: 4rem; /* Tamanho impactante */
+  font-weight: 500; /* Negrito para destaque */
+  margin-bottom: 1rem; /* Espaço equilibrado */
+  color: #FFD700; /* Ouro como cor principal */
+  text-transform: uppercase; /* Letras maiúsculas para impacto */
+  letter-spacing: 0.2em; /* Espaçamento maior para um ar futurista */
+  text-shadow: 0 0 1px #FFD700, 0 0 2px #FFB400, 0 0 3px #FF8C00; /* Brilho dourado */
+  animation: glow 8s infinite alternate; /* Animação de brilho */
+}
+
+/* Animação para o efeito neon dourado */
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #FFD700, 0 0 10px #FFB400, 0 0 15px #FF8C00;
+  }
+  to {
+    text-shadow: 0 0 15px #FFD700, 0 0 20px #FFDA00, 0 0 25px #FFB400;
+  }
 }
 
 .hero p {
