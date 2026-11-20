@@ -1,12 +1,17 @@
 const screen = document.querySelector('#screen');
 const title = document.querySelector('#screen-title');
 const tabs = [...document.querySelectorAll('[data-screen]')];
-let current = 'pista', start = Date.now(), lap = 7;
+let current = 'dica';
+let start = Date.now();
 const screenImages = { chegada: 'velo-chegada.png', resumo: 'velo-resumo.png', voltas: 'velo-voltas.png', menu: 'velo-menu.png' };
 const screenLabels = { chegada: 'Tela de fechamento de volta', resumo: 'Resumo da sessão', voltas: 'Lista de voltas', menu: 'Menu principal' };
 function render() {
-  if (current === 'pista') {
-    const seconds = ((Date.now() - start) / 1000) % 12;
+  if (current === 'dica') {
+    screen.innerHTML = '<div class="coach-screen"><span>EMERSON · DICA DE PILOTAGEM</span><strong>Curva 3</strong><p>Experimente frear um pouco antes para entrar na reta com mais velocidade.</p></div>';
+  } else if (current === 'pista') {
+    const elapsed = (Date.now() - start) / 1000;
+    const lap = 7 + Math.floor(elapsed / 12);
+    const seconds = elapsed % 12;
     const time = (seconds * 4.37).toFixed(2).padStart(5, '0');
     const speed = Math.round(71 + 12 * Math.sin(seconds));
     const delta = -0.06 + 0.18 * Math.sin(seconds * 0.55);
@@ -19,14 +24,61 @@ function render() {
     screen.innerHTML = `<img class="velo-screen" src="assets/${screenImages[current]}" alt="${screenLabels[current]} do Velo, com dados ilustrativos">`;
   }
 }
-function select(name) { current = name; tabs.forEach(t => {const active=t.dataset.screen===name;t.classList.toggle('active',active);t.setAttribute('aria-selected',active)}); render(); }
+function select(name) { if (name === 'pista') start = Date.now(); current = name; tabs.forEach(t => {const active=t.dataset.screen===name;t.classList.toggle('active',active);t.setAttribute('aria-selected',active)}); render(); }
 tabs.forEach(t=>t.addEventListener('click',()=>select(t.dataset.screen)));
-let auto = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-tabs.forEach(t=>t.addEventListener('click',()=>{auto=false;document.querySelector('#demo-status').textContent='● TELA SELECIONADA'}));
-setInterval(()=>{if(auto && current==='pista' && Date.now()-start>12000){lap++;select('chegada');setTimeout(()=>{if(auto){start=Date.now();select('pista')}},2500)} else if(current==='pista') render()},150);
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+setInterval(() => {
+  if (current === 'pista' && !reducedMotion.matches) render();
+}, 150);
+document.querySelector('[data-show-tip]').addEventListener('click', () => { tabs[0].click(); tabs[0].focus({preventScroll:true}); });
 render();
 const appScreen = document.querySelector('#app-screen');
 const appTabs = [...document.querySelectorAll('[data-app]')];
 const appScreens = {visao:['visao','visão-geral','Visão geral'],sessoes:['sessoes','sessões','Sessões'],analise:['analise','análise-inteligente','Análise inteligente'],telemetria:['telemetria','dados-de-telemetria','Dados de telemetria'],sessao:['sessao','detalhes-da-sessão','Detalhes da sessão'],voltas:['voltas','voltas','Voltas'],equipamentos:['equipamentos','equipamentos','Equipamentos']};
 function selectApp(name){const [file,path,label]=appScreens[name];appScreen.innerHTML=`<img src="assets/emerson-${file}.png" alt="Tela ${label} do Emerson">`;document.querySelector('#app-path').textContent=path;appTabs.forEach(t=>{const active=t.dataset.app===name;t.classList.toggle('active',active);t.setAttribute('aria-selected',active)})}
 appTabs.forEach(t=>t.addEventListener('click',()=>selectApp(t.dataset.app)));selectApp('visao');
+
+const menu = document.querySelector('#main-nav');
+const toggle = document.querySelector('.menu-toggle');
+function setMenu(open) {
+  toggle.setAttribute('aria-expanded', String(open));
+  menu.classList.toggle('open', open);
+}
+toggle.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+menu.addEventListener('click', () => setMenu(false));
+document.addEventListener('click', event => {
+  if (!event.target.closest('.nav')) setMenu(false);
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && menu.classList.contains('open')) {
+    setMenu(false);
+    toggle.focus();
+  }
+});
+
+function enableTabKeys(buttons, panel) {
+  panel.setAttribute('role', 'tabpanel');
+  function sync() {
+    for (const button of buttons) {
+      button.tabIndex = button.getAttribute('aria-selected') === 'true' ? 0 : -1;
+      if (button.tabIndex === 0) panel.setAttribute('aria-labelledby', button.id);
+    }
+  }
+  buttons.forEach((button, index) => {
+    button.id = panel.id + '-tab-' + index;
+    button.setAttribute('aria-controls', panel.id);
+    button.addEventListener('click', sync);
+    button.addEventListener('keydown', event => {
+      const next = { ArrowRight: (index + 1) % buttons.length,
+        ArrowLeft: (index + buttons.length - 1) % buttons.length,
+        Home: 0, End: buttons.length - 1 }[event.key];
+      if (next === undefined) return;
+      event.preventDefault();
+      buttons[next].focus();
+      buttons[next].click();
+    });
+  });
+  sync();
+}
+enableTabKeys(tabs, screen);
+enableTabKeys(appTabs, appScreen);
