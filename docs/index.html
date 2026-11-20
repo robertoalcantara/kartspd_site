@@ -2,6 +2,14 @@
 <header class="nav"><a class="logo" href="#inicio" aria-label="KartSPD — início"><img src="assets/kartspd-logo.png" alt="KartSPD"></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menu</button><nav id="main-nav" aria-label="Navegação principal"><a href="#velo">Painel Velo</a><a href="#emerson">Emerson e IA</a><a href="#setup">Setup por áudio</a><a href="#sinalizacao">Sinalização</a></nav><a class="nav-cta" href="mailto:contato@devs.com.br">Fale com a gente <span>↗</span></a></header>
 <main id="inicio" tabindex="-1"><section class="hero"><div class="hero-bg"></div><div class="hero-layout"><div class="hero-copy"><div class="kicker"><i></i> KARTSPD / PAINEL VELO</div><h1>SEU KART<br>VOLTA A<br><em>VOLTA.</em></h1><p>O painel Velo mostra seu ritmo na pista. O Emerson analisa as voltas, envia dicas ao painel e registra o setup do kart a partir do áudio que você manda pelo WhatsApp.</p><div class="hero-actions"><a class="btn red" href="#velo">Conheça o painel <span>↗</span></a><a class="link-arrow" href="#emerson">Explore o Emerson <span>↗</span></a></div></div><div class="demo-shell" id="simulacao"><div class="device-area"><div class="device"><div id="screen" class="screen-content"></div></div></div>
 <div class="screen-picker" role="group" aria-label="Navegação da simulação">
+  <button type="button" id="screen-playback" aria-label="Pausar simulação" title="Pausar simulação" aria-controls="screen">
+    <svg viewBox="0 0 40 40" aria-hidden="true">
+      <circle class="timer-track" cx="20" cy="20" r="17"/>
+      <circle class="timer-fill" cx="20" cy="20" r="17" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" transform="rotate(-90 20 20)"/>
+      <path class="pause-icon" d="M15 13h4v14h-4zM22 13h4v14h-4z"/>
+      <path class="play-icon" d="M16 12l12 8-12 8z"/>
+    </svg>
+  </button>
   <button type="button" id="screen-prev" aria-label="Tela anterior" title="Tela anterior" disabled><span aria-hidden="true">‹</span></button>
   <label class="screen-choice"><span>Telas do Velo</span><select id="screen-choice" aria-controls="screen">
     <option value="pista">1/6 · Em pista</option>
@@ -24,10 +32,10 @@
     <figcaption>Exemplo de um treino</figcaption>
     <ol class="setup-flow">
       <li><small>WhatsApp</small><h4>Você manda um áudio</h4>
-        <blockquote><span aria-hidden="true" class="voice-wave"></span>“No segundo treino, usei 12 libras na dianteira e coroa de 76 dentes.”</blockquote>
+        <blockquote><span aria-hidden="true" class="voice-wave"></span>“Mudei a calibragem para 12 libras e coloquei o eixo mais mole.”</blockquote>
       </li>
       <li><small>Emerson · IA</small><h4>O Emerson cria o setup</h4>
-        <dl><div><dt>Pressão dianteira</dt><dd>12 psi</dd></div><div><dt>Coroa</dt><dd>76 dentes</dd></div></dl>
+        <dl><div><dt>Calibragem dos pneus</dt><dd>12 psi</dd></div><div><dt>Eixo</dt><dd>Mais mole</dd></div></dl>
       </li>
       <li><small>Sessão · Treino 2</small><h4>O setup fica vinculado</h4>
         <p>Depois, abra o Treino 2 e veja os ajustes junto aos tempos de volta. Compare com o treino anterior para entender como o kart respondeu.</p>

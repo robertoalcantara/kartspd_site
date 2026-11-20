@@ -4,7 +4,20 @@ const picker = document.querySelector('#screen-choice');
 const previous = document.querySelector('#screen-prev');
 const next = document.querySelector('#screen-next');
 let current = picker.value;
-let start = Date.now();
+const playback = document.querySelector('#screen-playback');
+const progressRing = playback.querySelector('.timer-fill');
+const duration = 8000;
+let startedAt = performance.now();
+let pausedAt = null;
+
+function elapsedTime() {
+  return (pausedAt ?? performance.now()) - startedAt;
+}
+
+function updateProgress(elapsed) {
+  progressRing.setAttribute('stroke-dashoffset', 100 * (1 - Math.min(elapsed / duration, 1)));
+}
+
 const screenImages = { chegada: 'velo-chegada.png', resumo: 'velo-resumo.png', voltas: 'velo-voltas.png', menu: 'velo-menu.png' };
 const screenLabels = { chegada: 'Tela de fechamento de volta', resumo: 'Resumo da sessão', voltas: 'Lista de voltas', menu: 'Menu principal' };
 function render() {
@@ -15,7 +28,7 @@ function render() {
       screen.innerHTML = '<img class="velo-screen" src="assets/velo-pista.png" alt="Volta 7. Melhor volta em 52,38 segundos, última em 53,04 e ganho de 0,24 segundo na volta atual.">';
       return;
     }
-    const elapsed = (Date.now() - start) / 1000;
+    const elapsed = elapsedTime() / 1000;
     const lap = 7 + Math.floor(elapsed / 12);
     const seconds = elapsed % 12;
     const time = (seconds * 4.37).toFixed(2).padStart(5, '0');
@@ -51,7 +64,8 @@ function render() {
 function selectScreen(name) {
   picker.value = name;
   current = name;
-  if (name === 'pista') start = Date.now();
+  startedAt = pausedAt ?? performance.now();
+  updateProgress(0);
   previous.disabled = picker.selectedIndex === 0;
   next.disabled = picker.selectedIndex === picker.length - 1;
   render();
@@ -61,8 +75,32 @@ previous.addEventListener('click', () => selectScreen(picker.options[picker.sele
 next.addEventListener('click', () => selectScreen(picker.options[picker.selectedIndex + 1].value));
 reducedMotion.addEventListener('change', render);
 setInterval(() => {
+  if (pausedAt !== null) return;
+  const elapsed = elapsedTime();
+  if (elapsed >= duration) {
+    const nextIndex = (picker.selectedIndex + 1) % picker.length;
+    selectScreen(picker.options[nextIndex].value);
+    return;
+  }
+  updateProgress(elapsed);
   if (current === 'pista' && !reducedMotion.matches) render();
-}, 150);
+}, 100);
+
+playback.addEventListener('click', () => {
+  const now = performance.now();
+  if (pausedAt === null) {
+    pausedAt = now;
+    updateProgress(elapsedTime());
+  } else {
+    startedAt += now - pausedAt;
+    pausedAt = null;
+  }
+  const paused = pausedAt !== null;
+  playback.classList.toggle('paused', paused);
+  const label = paused ? 'Retomar simulação' : 'Pausar simulação';
+  playback.setAttribute('aria-label', label);
+  playback.title = label;
+});
 document.querySelector('[data-show-tip]').addEventListener('click', () => {
   selectScreen('dica');
   picker.focus({preventScroll:true});
