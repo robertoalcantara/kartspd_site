@@ -1,7 +1,9 @@
 const screen = document.querySelector('#screen');
-const title = document.querySelector('#screen-title');
-const tabs = [...document.querySelectorAll('[data-screen]')];
-let current = tabs.find(tab => tab.getAttribute('aria-selected') === 'true').dataset.screen;
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+const picker = document.querySelector('#screen-choice');
+const previous = document.querySelector('#screen-prev');
+const next = document.querySelector('#screen-next');
+let current = picker.value;
 let start = Date.now();
 const screenImages = { chegada: 'velo-chegada.png', resumo: 'velo-resumo.png', voltas: 'velo-voltas.png', menu: 'velo-menu.png' };
 const screenLabels = { chegada: 'Tela de fechamento de volta', resumo: 'Resumo da sessão', voltas: 'Lista de voltas', menu: 'Menu principal' };
@@ -9,31 +11,61 @@ function render() {
   if (current === 'dica') {
     screen.innerHTML = '<div class="coach-screen"><span>EMERSON · DICA DE PILOTAGEM</span><strong>Curva 3</strong><p>Experimente frear um pouco antes para entrar na reta com mais velocidade.</p></div>';
   } else if (current === 'pista') {
+    if (reducedMotion.matches) {
+      screen.innerHTML = '<img class="velo-screen" src="assets/velo-pista.png" alt="Volta 7. Melhor volta em 52,38 segundos, última em 53,04 e ganho de 0,24 segundo na volta atual.">';
+      return;
+    }
     const elapsed = (Date.now() - start) / 1000;
     const lap = 7 + Math.floor(elapsed / 12);
     const seconds = elapsed % 12;
     const time = (seconds * 4.37).toFixed(2).padStart(5, '0');
     const speed = Math.round(71 + 12 * Math.sin(seconds));
-    const delta = -0.06 + 0.18 * Math.sin(seconds * 0.55);
-    const deltaColor = delta <= 0 ? '#00ff00' : '#ff0000';
-    const barWidth = Math.min(Math.abs(delta) / 0.24, 1) * 190;
-    const barX = delta <= 0 ? 400 - barWidth : 400;
-    const deltaText = `${delta <= 0 ? '−' : '+'} ${Math.abs(delta).toFixed(2)}`;
-    screen.innerHTML = `<svg class="velo-screen" viewBox="0 0 800 480" role="img" aria-label="Simulação da tela do Velo em pista: volta ${lap}, tempo 00:${time}, velocidade ${speed} quilômetros por hora"><image href="assets/velo-pista.png" width="800" height="480"/><rect x="20" y="130" width="760" height="37" fill="black"/><rect x="${barX}" y="131" width="${barWidth}" height="35" fill="${deltaColor}"/><line x1="400" y1="125" x2="400" y2="171" stroke="white" stroke-width="2"/><rect x="210" y="175" width="380" height="153" fill="black"/><text x="400" y="296" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="800" font-size="130" fill="${deltaColor}">${deltaText}</text><g font-family="'Barlow Condensed', sans-serif" font-weight="800"><rect x="20" y="38" width="111" height="34" fill="black"/><text x="20" y="62" font-size="28" fill="white">VOLTA ${String(lap).padStart(2, '0')}</text><rect x="20" y="78" width="145" height="42" fill="black"/><text x="20" y="112" font-size="40" fill="white">00:${time}</text><rect x="689" y="78" width="49" height="42" fill="black"/><text x="737" y="112" font-size="40" fill="white" text-anchor="end">${speed}</text></g></svg>`;
+    const delta = Math.round((-0.06 + 0.18 * Math.sin(seconds * 0.55)) * 100);
+    const color = delta === 0 ? 'white' : delta < 0 ? '#00ff00' : '#ff0000';
+    const width = Math.min(378, Math.abs(delta) * 378 / 150);
+    const value = Math.abs(delta / 100).toFixed(2);
+    const sign = delta === 0 ? '±' : delta < 0 ? '-' : '+';
+    screen.innerHTML = `<svg class="velo-screen" viewBox="0 0 800 480" role="img"
+        aria-label="Volta ${lap}, tempo atual 00:${time}, velocidade ${speed} quilômetros por hora">
+      <image href="assets/velo-pista.png" width="800" height="480"/>
+      <g fill="black">
+        <rect x="16" y="10" width="144" height="56"/>
+        <rect x="16" y="74" width="150" height="48"/>
+        <rect x="650" y="74" width="90" height="48"/>
+        <rect x="20" y="130" width="760" height="36"/>
+        <rect x="120" y="176" width="560" height="152"/>
+      </g>
+      <rect x="${delta < 0 ? 400 - width : 400}" y="131" width="${width}" height="34" fill="${color}"/>
+      <line x1="400" y1="125" x2="400" y2="171" stroke="white" stroke-width="2"/>
+      <g font-family="Velo Saira, sans-serif" fill="white" font-weight="800">
+        <text x="20" y="48" font-weight="600" font-size="28">VOLTA ${String(lap).padStart(2, '0')}</text>
+        <text x="20" y="112" font-size="42">00:${time}</text>
+        <text x="736" y="112" font-size="42" text-anchor="end">${speed}</text>
+        <text x="258 320 383 417 480" y="297" font-size="130" fill="${color}">${sign}${value}</text>
+      </g>
+    </svg>`;
   } else {
     screen.innerHTML = `<img class="velo-screen" src="assets/${screenImages[current]}" alt="${screenLabels[current]} do Velo, com dados ilustrativos">`;
   }
 }
-function select(name) { if (name === 'pista') start = Date.now(); current = name; tabs.forEach(t => {const active=t.dataset.screen===name;t.classList.toggle('active',active);t.setAttribute('aria-selected',active)}); render(); }
-tabs.forEach(t=>t.addEventListener('click',()=>select(t.dataset.screen)));
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+function selectScreen(name) {
+  picker.value = name;
+  current = name;
+  if (name === 'pista') start = Date.now();
+  previous.disabled = picker.selectedIndex === 0;
+  next.disabled = picker.selectedIndex === picker.length - 1;
+  render();
+}
+picker.addEventListener('change', () => selectScreen(picker.value));
+previous.addEventListener('click', () => selectScreen(picker.options[picker.selectedIndex - 1].value));
+next.addEventListener('click', () => selectScreen(picker.options[picker.selectedIndex + 1].value));
+reducedMotion.addEventListener('change', render);
 setInterval(() => {
   if (current === 'pista' && !reducedMotion.matches) render();
 }, 150);
 document.querySelector('[data-show-tip]').addEventListener('click', () => {
-  const tipTab = document.querySelector('[data-screen="dica"]');
-  tipTab.click();
-  tipTab.focus({preventScroll:true});
+  selectScreen('dica');
+  picker.focus({preventScroll:true});
 });
 render();
 const appScreen = document.querySelector('#app-screen');
@@ -84,5 +116,5 @@ function enableTabKeys(buttons, panel) {
   });
   sync();
 }
-enableTabKeys(tabs, screen);
+
 enableTabKeys(appTabs, appScreen);
