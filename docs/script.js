@@ -1,7 +1,7 @@
 const screen = document.querySelector('#screen');
 const title = document.querySelector('#screen-title');
 const tabs = [...document.querySelectorAll('[data-screen]')];
-let current = 'dica';
+let current = tabs.find(tab => tab.getAttribute('aria-selected') === 'true').dataset.screen;
 let start = Date.now();
 const screenImages = { chegada: 'velo-chegada.png', resumo: 'velo-resumo.png', voltas: 'velo-voltas.png', menu: 'velo-menu.png' };
 const screenLabels = { chegada: 'Tela de fechamento de volta', resumo: 'Resumo da sessão', voltas: 'Lista de voltas', menu: 'Menu principal' };
@@ -30,7 +30,11 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 setInterval(() => {
   if (current === 'pista' && !reducedMotion.matches) render();
 }, 150);
-document.querySelector('[data-show-tip]').addEventListener('click', () => { tabs[0].click(); tabs[0].focus({preventScroll:true}); });
+document.querySelector('[data-show-tip]').addEventListener('click', () => {
+  const tipTab = document.querySelector('[data-screen="dica"]');
+  tipTab.click();
+  tipTab.focus({preventScroll:true});
+});
 render();
 const appScreen = document.querySelector('#app-screen');
 const appTabs = [...document.querySelectorAll('[data-app]')];
